@@ -48,8 +48,8 @@ const Home = () => {
           : generating
             ? 'Generating...'
             : imageUrl.length > 0
-              ? 'Enjoy.'
-              : 'Think about it.'}
+              ? ''
+              : ''}
       </StyledHome.Subtitle>
     </>
   );
