@@ -35,7 +35,7 @@ const Audio = () => {
       // Event listeners to update state based on actual playback state
       audio.onplay = () => setIsPlaying(true);
       audio.onpause = () => setIsPlaying(false);
-      audio.volume = 0.05;
+      audio.volume = 0.005;
     }
   }, []);
 
