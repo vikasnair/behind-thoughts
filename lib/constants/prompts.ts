@@ -36,6 +36,8 @@ namespace Prompts {
   You should try an interesting style, such as abstract, surreal, or impressionistic. You can try it as a painting, or a drawing, or a photograph, or a collage, or any other style you like.
   
   As much as possible, you should use people or animals or objects or places or things in the image, rather than abstract shapes or patterns or colors. Ideally depicting everyday scenes that relate to the strategy in some way, however distant.
+
+  The image should be grounded in reality as much as possible.
   
   The strategy you are to represent is:
   `;
