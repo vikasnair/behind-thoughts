@@ -18,6 +18,7 @@ namespace Button {
     cursor: 'pointer',
     display: 'flex',
     fontSize: '12px',
+    fontWeight: 'normal',
     margin: 0,
     outline: 0,
     padding: 0,
