@@ -170,7 +170,7 @@ const CommandBar = () => {
           </Button.Solid>
         </form>
 
-        <CopyButton>{`https://www.behindthoughts.com?id=${NetworkUtils.encrypt(message)}`}</CopyButton>
+        <CopyButton>{`https://www.behindthoughts.com/${NetworkUtils.encrypt(message)}`}</CopyButton>
 
         {imageUrl.length > 0 && (
           <Link href={imageUrl} target={'_blank'}>
