@@ -109,7 +109,7 @@ const CommandBar = () => {
       const decrypted = NetworkUtils.decrypt(id);
       setMessage(decrypted);
       fetchImage(decrypted);
-    } else {
+    } else if (message.length === 0) {
       const defaultMessage = '"Try it in reverse."';
       setMessage(defaultMessage);
       fetchImage(defaultMessage);
