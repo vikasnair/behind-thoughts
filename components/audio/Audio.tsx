@@ -1,11 +1,14 @@
+import MediaQuery from '@/lib/enums/MediaQuery';
+import useMediaQuery from '@/lib/hooks/useMediaQuery';
 import { SpeakerLoudIcon, SpeakerOffIcon } from '@radix-ui/react-icons';
 import { useEffect, useRef, useState } from 'react';
 import Button from '../button/Button';
 import StyledAudio from './styles';
 
 const Audio = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const isMobile = useMediaQuery(MediaQuery.MobileScreen);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   // Toggle play/pause
   const togglePlayPause = () => {
@@ -37,7 +40,7 @@ const Audio = () => {
   }, []);
 
   return (
-    <StyledAudio.Root>
+    <StyledAudio.Root isMobile={isMobile}>
       <audio ref={audioRef} src={'/audio.m4a'} style={{ display: 'none' }} />
 
       <Button.Base onClick={togglePlayPause}>
