@@ -19,9 +19,7 @@ export const GET = async (request: Request): Promise<NextResponse> => {
     prefix: fileName,
   });
 
-  const url = blobs.find((blob) =>
-    blob.pathname.startsWith(fileName)
-  )?.downloadUrl;
+  const url = blobs.find((blob) => blob.pathname.startsWith(fileName))?.url;
 
   return NextResponse.json({
     url,
