@@ -1,3 +1,4 @@
+import Audio from '@/components/audio/Audio';
 import CommandBar from '@/components/command-bar/CommandBar';
 import MediaQuery from '@/lib/enums/MediaQuery';
 import useImageGenerating from '@/lib/hooks/useImageGenerating';
@@ -29,6 +30,8 @@ const Home = () => {
       </Head>
 
       <CommandBar />
+
+      <Audio />
 
       <StyledHome.Root
         style={{
