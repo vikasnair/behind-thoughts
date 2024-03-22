@@ -18,8 +18,8 @@ export const POST = async (req: Request) => {
     model: 'dall-e-3',
     prompt,
     n: 1,
-    quality: 'hd',
-    size: '1792x1024',
+    quality: 'standard',
+    size: '1024x1024',
   });
 
   return NextResponse.json(response);

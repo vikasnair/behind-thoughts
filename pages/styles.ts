@@ -2,7 +2,7 @@ import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 
 namespace StyledHome {
-  const flicker = keyframes`
+  export const flicker = keyframes`
   0% {
     opacity: 0.27861;
     }

@@ -1,10 +1,15 @@
 import CommandBar from '@/components/command-bar/CommandBar';
+import MediaQuery from '@/lib/enums/MediaQuery';
 import useImageGenerating from '@/lib/hooks/useImageGenerating';
 import useImageUrl from '@/lib/hooks/useImageUrl';
+import useMediaQuery from '@/lib/hooks/useMediaQuery';
+import useMessage from '@/lib/hooks/useMessage';
 import Head from 'next/head';
 import StyledHome from './styles';
 
 const Home = () => {
+  const isMobile = useMediaQuery(MediaQuery.MobileScreen);
+  const { message } = useMessage();
   const { generating } = useImageGenerating();
   const { imageUrl } = useImageUrl();
 
@@ -33,11 +38,15 @@ const Home = () => {
         }}></StyledHome.Root>
 
       <StyledHome.Subtitle>
-        {generating
-          ? 'Generating...'
-          : imageUrl.length > 0
-            ? 'Enjoy.'
-            : 'Think about it.'}
+        {isMobile
+          ? message.length > 0
+            ? `"${message.replaceAll('"', '')}"`
+            : ''
+          : generating
+            ? 'Generating...'
+            : imageUrl.length > 0
+              ? 'Enjoy.'
+              : 'Think about it.'}
       </StyledHome.Subtitle>
     </>
   );

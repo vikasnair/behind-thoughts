@@ -2,12 +2,19 @@ import StyleUtils from '@/lib/utils/style';
 import styled from '@emotion/styled';
 
 namespace Button {
-  const Base = styled.button({
+  export const Base = styled.button(({ theme }) => ({
+    ':active': {
+      transform: 'translateY(2px)',
+    },
     ':disabled': {
       cursor: 'default',
       pointerEvents: 'none',
     },
     alignItems: 'center',
+    background: 'none',
+    border: 0,
+    color: theme.foreground,
+    columnGap: '4px',
     cursor: 'pointer',
     display: 'flex',
     fontSize: '12px',
@@ -17,7 +24,7 @@ namespace Button {
     transition: 'all ease-in-out',
     transitionDuration: '100ms',
     whiteSpace: 'nowrap',
-  });
+  }));
 
   export const Solid = styled(Base)(({ theme }) => ({
     ':disabled': {
