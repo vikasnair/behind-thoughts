@@ -1,3 +1,4 @@
+import Prompts from '@/lib/constants/prompts';
 import MediaQuery from '@/lib/enums/MediaQuery';
 import useImageGenerating from '@/lib/hooks/useImageGenerating';
 import useImageUrl from '@/lib/hooks/useImageUrl';
@@ -10,46 +11,11 @@ import { ExternalLinkIcon } from '@radix-ui/react-icons';
 import { useChat } from 'ai/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ColorRing } from 'react-loader-spinner';
 import Button from '../button/Button';
 import CopyButton from '../button/copy/CopyButton';
 import StyledCommandBar from './styles';
-
-const chatPrompt = `
-Oblique strategies are a set of cards with a prompt on each one, designed to help artists get un-stuck. They were created by Brian Eno and Peter Schmidt.
-
-Here are a few examples:
-Use an old idea.
-What would your closest friend do?
-What to increase? What to reduce?
-Try it in reverse.
-Turn it upside down.
-
-Your job is to create a new Oblique Strategy.
-
-Restrict your input to only the strategy itself. For example, "Use an old idea."
-
-The strategy should be absract enough, and open to interpretation, vague. It should not be too specific.
-
-NEVER say "Try it in reverse."
-
-Use quotation marks, and end the sentence with the appropriate punctuation.
-`;
-
-const imagePrompt = `
-Oblique strategies are a set of cards with a prompt on each one, designed to help artists get un-stuck. They were created by Brian Eno and Peter Schmidt.
-
-You are to create an image that represents an Oblique Strategy. The image should NOT have any text in it WHATSOEVER, and should NOT represent a card or deck or any other physical representation of the strategies.
-
-The image should be artistic, meaningful, and unique. It should not look fake or computer-generated.
-
-You should try an interesting style, such as abstract, surreal, or impressionistic. You can try it as a painting, or a drawing, or a photograph, or a collage, or any other style you like.
-
-As much as possible, you should use people or animals or objects or places or things in the image, rather than abstract shapes or patterns or colors. Ideally depicting everyday scenes that relate to the strategy in some way, however distant.
-
-The strategy you are to represent is:
-`;
 
 const CommandBar = () => {
   const router = useRouter();
@@ -61,17 +27,19 @@ const CommandBar = () => {
   const { message: _message, setMessage } = useMessage();
   const { generating, setGenerating } = useImageGenerating();
   const { imageUrl, setImageUrl } = useImageUrl();
+  const [startTime, setStartTime] = useState(Date.now());
 
   const { append, messages } = useChat({
-    initialInput: chatPrompt,
+    initialInput: Prompts.chat,
     onFinish: ({ content }) => {
+      const chatCompletionEndTime = Date.now();
       setMessage(content);
 
       (async () => {
         try {
           const imageResponse = await fetch('/api/image', {
             body: JSON.stringify({
-              prompt: imagePrompt + content,
+              prompt: Prompts.image + content,
             }),
             method: 'POST',
             headers: {
@@ -80,6 +48,7 @@ const CommandBar = () => {
           });
 
           const imageCompletion = await imageResponse.json();
+          const endTime = Date.now();
 
           if (
             Array.isArray(imageCompletion.data) &&
@@ -94,6 +63,16 @@ const CommandBar = () => {
               await fetch(`/api/storage`, {
                 method: 'POST',
                 body: JSON.stringify({
+                  message: content,
+                  url,
+                }),
+              });
+
+              await fetch(`/api/openlayer`, {
+                method: 'POST',
+                body: JSON.stringify({
+                  chatCompletionLatency: chatCompletionEndTime - startTime,
+                  latency: endTime - startTime,
                   message: content,
                   url,
                 }),
@@ -158,10 +137,11 @@ const CommandBar = () => {
           onSubmit={(e) => {
             e.preventDefault();
             setGenerating(true);
+            setStartTime(Date.now());
 
             append({
-              content: chatPrompt + 'Generate a new unique Oblique Strategy.',
-              role: 'user',
+              content: Prompts.chat + 'Generate a new unique Oblique Strategy.',
+              role: 'system',
             });
           }}>
           <Button.Solid disabled={generating} type='submit'>
