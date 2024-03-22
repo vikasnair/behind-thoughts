@@ -144,7 +144,9 @@ const CommandBar = () => {
             setStartTime(Date.now());
 
             append({
-              content: Prompts.chat + 'Generate a new unique Oblique Strategy.',
+              content:
+                Prompts.chat +
+                'Generate a new unique Oblique Strategy. It should be very different than any previously generated ones.',
               role: 'system',
             });
           }}>
