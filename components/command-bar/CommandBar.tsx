@@ -8,6 +8,7 @@ import NetworkUtils from '@/lib/utils/network';
 import StyleUtils from '@/lib/utils/style';
 import { useTheme } from '@emotion/react';
 import { ExternalLinkIcon } from '@radix-ui/react-icons';
+import { CreateMessage } from 'ai';
 import { useChat } from 'ai/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -24,6 +25,11 @@ const CommandBar = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(MediaQuery.MobileScreen);
 
+  const promptMessage = {
+    content: Prompts.chat,
+    role: 'system',
+  } as CreateMessage;
+
   const { message: _message, setMessage } = useMessage();
   const { generating, setGenerating } = useImageGenerating();
   const { imageUrl, setImageUrl } = useImageUrl();
@@ -31,7 +37,7 @@ const CommandBar = () => {
 
   const { append, messages } = useChat({
     initialInput: Prompts.chat,
-    onFinish: ({ content }) => {
+    onFinish: ({ content, role }) => {
       const chatCompletionEndTime = Date.now();
       setMessage(content);
 
@@ -74,6 +80,7 @@ const CommandBar = () => {
                   chatCompletionLatency: chatCompletionEndTime - startTime,
                   latency: endTime - startTime,
                   message: content,
+                  prompt: [...messages, promptMessage],
                   url,
                 }),
               });
@@ -143,12 +150,7 @@ const CommandBar = () => {
             setGenerating(true);
             setStartTime(Date.now());
 
-            append({
-              content:
-                Prompts.chat +
-                'Generate a new unique Oblique Strategy. It should be very different than any previously generated ones.',
-              role: 'system',
-            });
+            append(promptMessage);
           }}>
           <Button.Solid disabled={generating} type='submit'>
             {generating && (

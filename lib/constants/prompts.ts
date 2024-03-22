@@ -14,10 +14,16 @@ namespace Prompts {
   Restrict your input to only the strategy itself. For example, "Use an old idea."
   
   The strategy should be absract enough, and open to interpretation, vague. It should not be too specific.
+
+  The strategy should not be too long.
+
+  The strategy should never mention "creation" or the act of making something.
   
   NEVER say "Try it in reverse."
   
   Use quotation marks, and end the sentence with the appropriate punctuation.
+
+  Generate a new unique Oblique Strategy. It should be very different than any previously generated ones.
   `;
 
   export const image = `

@@ -1,6 +1,5 @@
 // Optional, but recommended: run on the edge runtime.
 
-import Prompts from '@/lib/constants/prompts';
 import { NextResponse } from 'next/server';
 import { OpenlayerClient } from 'openlayer';
 
@@ -12,7 +11,8 @@ const openlayer = new OpenlayerClient({
 });
 
 export const POST = async (request: Request): Promise<NextResponse<void>> => {
-  const { chatCompletionLatency, latency, message, url } = await request.json();
+  const { chatCompletionLatency, latency, message, prompt, url } =
+    await request.json();
 
   try {
     await openlayer.streamData(
@@ -25,7 +25,7 @@ export const POST = async (request: Request): Promise<NextResponse<void>> => {
       {
         ...openlayer.defaultConfig,
         inputVariableNames: [],
-        prompt: [{ content: Prompts.chat, role: 'system' }],
+        prompt,
       },
       '2a6059de-eaf1-48fe-9a02-5771413c545e'
     );
