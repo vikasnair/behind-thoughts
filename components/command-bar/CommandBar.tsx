@@ -94,6 +94,10 @@ const CommandBar = () => {
     : _message;
 
   useEffect(() => {
+    if (!router.isReady) {
+      return;
+    }
+
     const fetchImage = async (message: string) => {
       const response = await fetch(`/api/storage?message=${message}`, {
         method: 'GET',
@@ -114,7 +118,7 @@ const CommandBar = () => {
       setMessage(defaultMessage);
       fetchImage(defaultMessage);
     }
-  }, [router.query]);
+  }, [router.isReady, router.query]);
 
   return (
     <StyledCommandBar.Root>
