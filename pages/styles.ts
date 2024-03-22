@@ -136,7 +136,7 @@ namespace StyledHome {
 
   export const Root = styled.main(({ theme }) => ({
     '::after': {
-      animation: `${flicker} 0.15s infinite`,
+      animation: `${flicker} 20s infinite`,
       background: 'rgba(18, 16, 16, 0.1)',
       bottom: 0,
       content: '""',
