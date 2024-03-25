@@ -44,7 +44,11 @@ const Audio = () => {
       <audio ref={audioRef} src={'/audio.m4a'} style={{ display: 'none' }} />
 
       <Button.Base onClick={togglePlayPause}>
-        {isPlaying ? <SpeakerLoudIcon /> : <SpeakerOffIcon />}
+        {isPlaying ? (
+          <SpeakerLoudIcon height='14' width='14' />
+        ) : (
+          <SpeakerOffIcon height='14' width='14' />
+        )}
       </Button.Base>
     </StyledAudio.Root>
   );

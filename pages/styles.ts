@@ -1,3 +1,4 @@
+import StyledAudio from '@/components/audio/styles';
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 
@@ -188,6 +189,12 @@ namespace StyledHome {
     width: 'fit-content',
     zIndex: 2,
   }));
+
+  export const Tooltip = styled(StyledAudio.Root)<{ isMobile?: boolean }>(
+    ({ isMobile }) => ({
+      left: isMobile ? '24px' : '48px',
+    })
+  );
 }
 
 export default StyledHome;
