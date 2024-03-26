@@ -33,7 +33,7 @@ const Home = () => {
         <link href='/favicon.ico' rel='icon' />
       </Head>
 
-      <StyledHome.Tooltip>
+      <StyledHome.Tooltip isMobile={isMobile}>
         <Tooltip
           description={
             <>
